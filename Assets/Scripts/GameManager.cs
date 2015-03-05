@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject gameWonCamera;
 	public Text scoreText;
 	public Text instructions;
+	public GameObject winText;
 	public GameObject player;
 
 	private int mode;
@@ -39,10 +40,13 @@ public class GameManager : MonoBehaviour {
 
 	public void scorePoint() { 
 		score++;
-		instructions.text = "GOAL!\nGOAL!";
+
 		if( score == bulls.Count ) {
-			mode = WON_MODE;
+
 			StartCoroutine( wonLevel() );
+		}
+		else {
+			instructions.text = (bulls.Count - score) + " bulls to go";
 		}
 	}
 
@@ -60,7 +64,10 @@ public class GameManager : MonoBehaviour {
 	}
 
 	IEnumerator wonLevel() {
-		
+		instructions.text = "";
+		mode = WON_MODE;
+		winText.SetActive( true );
+		winText.transform.Find( "Your Score" ).GetComponent<Text>().text = score + "";
 		iTween.MoveTo(primaryCamera, iTween.Hash("position", gameWonCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
 		iTween.RotateTo(primaryCamera, iTween.Hash("rotation", gameWonCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
 		yield return new WaitForSeconds( 4f );
