@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour {
 	public Transform gameoverCamera;
 	public Text scoreText;
 	public Text instructions;
+	public GameObject player;
 
 	private int mode;
 	private int score;
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void defaultInstructions() {
-		instructions.text = "Space to Dare the Bull";
+		instructions.text = "Space to Dare\nthe Bull";
 	}
 
 	public void scorePoint() { 
@@ -45,11 +46,19 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void gameOver() {
-		mode = GAME_OVER_MODE;
-		foreach( Bull thisBull in bulls ) {
-			thisBull.disable();
+		if( mode != GAME_OVER_MODE ) {
+			mode = GAME_OVER_MODE;
+			foreach( Bull thisBull in bulls ) {
+				thisBull.disable();
+//				thisBull.GetComponent<Rigidbody>().useGravity = false;
+//				thisBull.GetComponent<Rigidbody>().drag = 0;
+			}
+			instructions.text = "You Died\nSpace to Restart";
+			player.GetComponent<Rigidbody>().constraints = 0;
+//			player.GetComponent<Rigidbody>().useGravity = false;
+//			player.GetComponent<Rigidbody>().drag = 0;
+			player.transform.FindChild("Camera").parent = null; // Remove the camera so that it doesn't slam into the ground
 		}
-		instructions.text = "You Died";
 	}
 
 	// Use this for initialization
@@ -60,6 +69,21 @@ public class GameManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-	
+		if( canControl () && Input.GetKeyDown("space") ) {
+			bool didAnyoneCharge = false;
+			foreach( Bull thisBull in bulls ) {
+				if( thisBull.isActive && !thisBull.isCharging ) {
+					thisBull.Charge();
+					didAnyoneCharge = true;
+				}
+			}
+			if( didAnyoneCharge ) {
+				addStroke();
+			}
+		}
+		else if( Input.GetKeyDown("space") ) {
+
+			Application.LoadLevel(0); // load the first scene
+		}
 	}
 }

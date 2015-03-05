@@ -19,14 +19,13 @@ public class Bull : MonoBehaviour {
 	public float playerTrackingForce;
 	public GameManager gameManager;
 
-	private bool isActive;
-	private bool isCharging;
-	private bool isSlowingDown;
+	public bool isActive;
+	public bool isCharging;
+	public bool isSlowingDown;
 	private Vector3 chargeTarget;
 
 
 	public void Charge() {
-		Debug.Log( "Torro!" );
 		playerTrigger.stopLooking();
 		isCharging = true;
 		isSlowingDown = false;
@@ -68,12 +67,7 @@ public class Bull : MonoBehaviour {
 	void Update () {
 		if( isActive && gameManager.canControl() ) {
 			transform.LookAt( player.transform );
-
-			if( !isCharging && Input.GetKeyDown("space") ) {
-				Charge();
-				gameManager.addStroke();
-			}
-			else if( isSlowingDown ) {
+			if( isSlowingDown ) {
 				GetComponent<Rigidbody>().AddForce( (player.transform.position - transform.position).normalized * playerTrackingForce );
 				if( GetComponent<Rigidbody>().velocity.magnitude < 1 ) {
 					halt();
