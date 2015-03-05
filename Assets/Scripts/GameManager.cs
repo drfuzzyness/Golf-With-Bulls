@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-
+	
 	public List<Bull> bulls;
-	public Transform primaryCamera;
-	public Transform gameoverCamera;
+	public GameObject primaryCamera;
+	public GameObject gameWonCamera;
 	public Text scoreText;
 	public Text instructions;
 	public GameObject player;
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour {
 		instructions.text = "GOAL!\nGOAL!";
 		if( score == bulls.Count ) {
 			mode = WON_MODE;
+			StartCoroutine( wonLevel() );
 		}
 	}
 
@@ -50,15 +51,21 @@ public class GameManager : MonoBehaviour {
 			mode = GAME_OVER_MODE;
 			foreach( Bull thisBull in bulls ) {
 				thisBull.disable();
-//				thisBull.GetComponent<Rigidbody>().useGravity = false;
-//				thisBull.GetComponent<Rigidbody>().drag = 0;
 			}
 			instructions.text = "You Died\nSpace to Restart";
 			player.GetComponent<Rigidbody>().constraints = 0;
-//			player.GetComponent<Rigidbody>().useGravity = false;
-//			player.GetComponent<Rigidbody>().drag = 0;
 			player.transform.FindChild("Camera").parent = null; // Remove the camera so that it doesn't slam into the ground
+
 		}
+	}
+
+	IEnumerator wonLevel() {
+		
+		iTween.MoveTo(primaryCamera, iTween.Hash("position", gameWonCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
+		iTween.RotateTo(primaryCamera, iTween.Hash("rotation", gameWonCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
+		yield return new WaitForSeconds( 4f );
+		Application.LoadLevel(Application.loadedLevel+1);
+		
 	}
 
 	// Use this for initialization
