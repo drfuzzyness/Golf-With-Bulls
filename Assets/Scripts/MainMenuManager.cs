@@ -8,7 +8,7 @@ public class MainMenuManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		PlayerPrefs.SetInt("Score", 0);
+		PlayerPrefs.SetInt("Strokes", 0);
 	}
 	
 	// Update is called once per frame

@@ -10,8 +10,8 @@ public class WinnerScreenManager : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		scoreText.text = PlayerPrefs.GetInt("Score") + "";
-		PlayerPrefs.SetInt("Score", 0);
+		scoreText.text = "+" + PlayerPrefs.GetInt("Strokes") ;
+		PlayerPrefs.SetInt("Strokes", 0);
 	}
 	
 	// Update is called once per frame
@@ -23,7 +23,7 @@ public class WinnerScreenManager : MonoBehaviour {
 	}
 	
 	IEnumerator startGame() {
-		
+		PlayerPrefs.SetInt("Strokes", 0);
 		iTween.MoveTo(mainCamera, iTween.Hash("position", gameCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
 		iTween.RotateTo(mainCamera, iTween.Hash("rotation",gameCamera.transform, "time", 2f, "easetype", "easeInOutQuint") );
 		yield return new WaitForSeconds( 2f );

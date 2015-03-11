@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter( Collision activator ) {
-		if( activator.gameObject.CompareTag("Bull") ) {
+		if( activator.gameObject.CompareTag("Bull") && activator.gameObject.GetComponent<Bull>().isActive ) {
 			gameManager.gameOver();
 		}
 	}
