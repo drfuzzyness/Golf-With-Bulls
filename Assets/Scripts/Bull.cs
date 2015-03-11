@@ -68,7 +68,8 @@ public class Bull : MonoBehaviour {
 		if( isActive && gameManager.canControl() ) {
 			transform.LookAt( player.transform );
 			if( isSlowingDown ) {
-				GetComponent<Rigidbody>().AddForce( (player.transform.position - transform.position).normalized * playerTrackingForce );
+				GetComponent<Rigidbody>().AddForce( (player.transform.position - transform.position).normalized
+				                                   * playerTrackingForce );
 				if( GetComponent<Rigidbody>().velocity.magnitude < 1 ) {
 					halt();
 
@@ -78,8 +79,12 @@ public class Bull : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
+	}
 
-
+	void OnCollision( Collision activator ) {
+		if( activator.gameObject.CompareTag( "Arena" ) ) {
+			PassedPlayer();
+		}
 	}
 
 

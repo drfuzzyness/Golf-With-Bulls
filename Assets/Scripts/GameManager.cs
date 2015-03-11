@@ -3,6 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/*
+  ,-_/,.     .                  .                  
+ ' |_|/ ,-. |-   ,-. . ,-. ,-. |  ,-. ,-.   . ,-. 
+  /| |  | | |    `-. | | | | | |  |-' `-.   | | | 
+  `' `' `-' `'   `-' ' ' ' `-| `' `-' `-'   ' ' ' 
+                            ,|                    
+                            `'                    
+                                                  
+        . . ,-. . . ,-.   ,-. ,-. ,-. ,-.         
+        | | | | | | |     ,-| |   |-' ,-|         
+        `-| `-' `-^ '     `-^ '   `-' `-^         
+         /|                                       
+        `-'                                       
+ */
+
 public class GameManager : MonoBehaviour {
 	
 	public List<Bull> bulls;
